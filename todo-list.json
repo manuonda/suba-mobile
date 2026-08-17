@@ -1,0 +1,149 @@
+{
+  "updated_at": "2026-08-17",
+  "tasks": [
+    {
+      "id": "S0-0",
+      "sprint": 0,
+      "title": "Crear docs/plan-migracion.md (copia persistente del plan) y este todo-list.json",
+      "owner": "assistant",
+      "status": "done",
+      "notes": "Fuente de verdad legible dentro del repo, versionada en git",
+      "files": ["docs/plan-migracion.md", "todo-list.json"]
+    },
+    {
+      "id": "S0-1",
+      "sprint": 0,
+      "title": "Bootstrap proyecto Expo + TypeScript",
+      "owner": "assistant",
+      "status": "done",
+      "notes": "create-expo-app blank-typescript + expo-router instalado y configurado como entry point (app/ con Expo Router en vez de App.tsx). Bajado SDK 57 -> 56 -> 55 -> 54: Play Store le sirve al usuario (Moto G82 5G, Android 13) Expo Go compatible con SDK 54 nomás. Proyecto quedó fijado en SDK 54 (expo@^54.0.0, react-native 0.81.5, react 19.1.0). ✅ CONFIRMADO abriendo en el dispositivo real vía Expo Go. tsc y expo-doctor (18/18) limpios. ⚠️ Pendiente antes de publicar (Sprint 6): al armar el development build propio (Sprint 1, por MapLibre) ya no depende de la Expo Go de la store — ahí evaluar si conviene subir el SDK de nuevo.",
+      "files": ["app.json", "package.json", "app/_layout.tsx", "app/(tabs)/"]
+    },
+    {
+      "id": "S0-2",
+      "sprint": 0,
+      "title": "Configurar EAS (perfiles development/preview/production)",
+      "owner": "assistant",
+      "status": "in_progress",
+      "notes": "eas.json creado a mano con los 3 perfiles (Android-first: apk en development/preview, app-bundle en production). Falta que el usuario corra `eas login` + `eas build:configure` con su cuenta de Expo para generar el projectId real en app.json (extra.eas.projectId) — no se puede hacer sin sus credenciales.",
+      "files": ["eas.json"]
+    },
+    {
+      "id": "S1-1",
+      "sprint": 1,
+      "title": "Portar useGPS a expo-location",
+      "owner": "assistant",
+      "status": "done",
+      "notes": "Preserva el shape GPSStatus/GPSState de bondiya. Usa Location.getForegroundPermissionsAsync/requestForegroundPermissionsAsync/getCurrentPositionAsync/hasServicesEnabledAsync. Wireado en app/(tabs)/index.tsx con un debug box (status/coords/error) para verificar en dispositivo.",
+      "files": ["shared/hooks/useGPS.ts", "shared/types/gps.ts", "shared/constants/geo.ts"]
+    },
+    {
+      "id": "S1-2",
+      "sprint": 1,
+      "title": "Portar Theme/Locale/Accedido context",
+      "owner": "assistant",
+      "status": "done",
+      "notes": "localStorage->AsyncStorage, sessionStorage->zustand en memoria (sin persist). lib/i18n/{types,locales,messages}.ts copiados verbatim (7 locales, pero v1 solo expone español — sin selector de idioma todavía). PantallaPermisos portado (versión simplificada con StyleSheet, sin el diseño Tailwind original) y wireado como gate en app/_layout.tsx antes del Stack, igual que app/page.tsx en bondiya.",
+      "files": ["shared/context/ThemeContext.tsx", "shared/context/LocaleContext.tsx", "shared/context/AccedidoStore.ts", "shared/context/UbicacionContext.tsx", "shared/components/shell/PantallaPermisos.tsx", "lib/i18n/"]
+    },
+    {
+      "id": "S1-3",
+      "sprint": 1,
+      "title": "Mapa base con MapLibre + OpenFreeMap",
+      "owner": "assistant",
+      "status": "pending",
+      "notes": "Instalar @maplibre/maplibre-react-native + config plugin, requiere development build (no corre en Expo Go). Reimplementar shared/components/mapa/Mapa.tsx, reusar shared/types/mapa.ts sin cambios.",
+      "files": ["shared/components/mapa/Mapa.tsx", "shared/types/mapa.ts"]
+    },
+    {
+      "id": "S2-1",
+      "sprint": 2,
+      "title": "Bundlear data/subtes/processed/*.json como assets",
+      "owner": "assistant",
+      "status": "pending",
+      "notes": "",
+      "files": ["data/subtes/processed/"]
+    },
+    {
+      "id": "S2-2",
+      "sprint": 2,
+      "title": "Portar lib/subte/*.ts (14 archivos + index) verbatim",
+      "owner": "assistant",
+      "status": "pending",
+      "notes": "",
+      "files": ["lib/subte/"]
+    },
+    {
+      "id": "S2-3",
+      "sprint": 2,
+      "title": "Portar useParadaDetalle.ts",
+      "owner": "assistant",
+      "status": "pending",
+      "notes": "",
+      "files": ["features/paradas/hooks/useParadaDetalle.ts"]
+    },
+    {
+      "id": "S3-1",
+      "sprint": 3,
+      "title": "Portar useSubtes.ts (forecast/alertas) contra API de bondiya",
+      "owner": "assistant",
+      "status": "pending",
+      "notes": "EXPO_PUBLIC_API_ORIGIN + AppState/focusManager para refetch on foreground",
+      "files": ["features/subtes/hooks/useSubtes.ts"]
+    },
+    {
+      "id": "S4-1",
+      "sprint": 4,
+      "title": "Portar Buscador (BuscadorFallback, ChipsAccesoRapido)",
+      "owner": "assistant",
+      "status": "pending",
+      "notes": "",
+      "files": ["features/buscar/components/"]
+    },
+    {
+      "id": "S5-1",
+      "sprint": 5,
+      "title": "Pantalla detalle de estación (parada/[id])",
+      "owner": "user",
+      "status": "pending",
+      "notes": "Stub creado en app/parada/[id].tsx con guía de qué usar (useParadaDetalle, lib/subte). Portar lógica de bondiya app/parada/[id]/page.tsx + ParadaPageClient.tsx (sin SSR/JSON-LD).",
+      "files": ["app/parada/[id].tsx"]
+    },
+    {
+      "id": "S5-2",
+      "sprint": 5,
+      "title": "Pantalla detalle de línea (linea/[id])",
+      "owner": "user",
+      "status": "pending",
+      "notes": "Stub creado en app/linea/[id].tsx con guía de qué usar (lib/subte/linea-horarios.ts, lines.ts). Portar lógica de bondiya app/linea/[id]/page.tsx + LineaPageClient.tsx (sin SSR/JSON-LD).",
+      "files": ["app/linea/[id].tsx"]
+    },
+    {
+      "id": "S6-1",
+      "sprint": 6,
+      "title": "Unificar colores de línea de subte (constants/subteColors.ts)",
+      "owner": "assistant",
+      "status": "pending",
+      "notes": "GTFS route_color como fuente de verdad",
+      "files": ["shared/constants/subteColors.ts"]
+    },
+    {
+      "id": "S6-2",
+      "sprint": 6,
+      "title": "Bottom-sheet de Configuración",
+      "owner": "assistant",
+      "status": "pending",
+      "notes": "",
+      "files": []
+    },
+    {
+      "id": "S6-3",
+      "sprint": 6,
+      "title": "Política de privacidad + EAS Build/Submit a Play Store",
+      "owner": "assistant",
+      "status": "pending",
+      "notes": "Bloqueante: Play Store exige URL de política de privacidad por uso de ACCESS_FINE_LOCATION",
+      "files": []
+    }
+  ]
+}
