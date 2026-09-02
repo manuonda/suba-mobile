@@ -1,20 +1,23 @@
 import { StyleSheet, Text, View } from "react-native";
 import { useGPS } from "@/shared/hooks/useGPS";
+import { getEstaciones, getSubteRoutes } from "@/lib/subte";
 
 /**
  * Tab "Mapa" — pantalla principal (equivalente a app/page.tsx + AppDashboard.tsx en bondiya).
- * Por ahora muestra el estado de useGPS() para verificar el hook end-to-end.
- * El mapa MapLibre se agrega en S1-3 (todo-list.json) y las estaciones/líneas
- * reales de subte en Sprint 2.
+ * Por ahora muestra el estado de useGPS() y un conteo de datos GTFS de subte
+ * cargados desde lib/subte (Sprint 2), para verificar ambas capas end-to-end
+ * en Expo Go sin necesitar el development build de MapLibre (S1-3, todavía pendiente).
  */
 export default function MapaScreen() {
   const gps = useGPS();
+  const estaciones = getEstaciones();
+  const rutas = getSubteRoutes();
 
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Mapa 🚇</Text>
       <Text style={styles.subtitle}>
-        Acá va el mapa MapLibre con las estaciones de subte (Sprint 1-2).
+        Acá va el mapa MapLibre con las estaciones de subte (falta S1-3).
       </Text>
 
       <View style={styles.debugBox}>
@@ -24,6 +27,12 @@ export default function MapaScreen() {
           coords: {gps.coords ? `${gps.coords.lat.toFixed(4)}, ${gps.coords.lng.toFixed(4)}` : "—"}
         </Text>
         {gps.error && <Text style={styles.debugError}>error: {gps.error}</Text>}
+      </View>
+
+      <View style={styles.debugBox}>
+        <Text style={styles.debugLabel}>lib/subte (GTFS estático) — debug</Text>
+        <Text style={styles.debugLine}>estaciones: {estaciones.length}</Text>
+        <Text style={styles.debugLine}>líneas: {rutas.map((r) => r.id).join(", ")}</Text>
       </View>
     </View>
   );

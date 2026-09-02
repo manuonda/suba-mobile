@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-08-17",
+  "updated_at": "2026-08-31",
   "tasks": [
     {
       "id": "S0-0",
@@ -60,8 +60,8 @@
       "sprint": 2,
       "title": "Bundlear data/subtes/processed/*.json como assets",
       "owner": "assistant",
-      "status": "pending",
-      "notes": "",
+      "status": "done",
+      "notes": "13 JSON copiados verbatim (316K): stops, estaciones, accesos, routes, trips, stop_times, frequencies, calendar, calendar_dates, pathways, transfers, fare_attributes, shapes.",
       "files": ["data/subtes/processed/"]
     },
     {
@@ -69,17 +69,17 @@
       "sprint": 2,
       "title": "Portar lib/subte/*.ts (14 archivos + index) verbatim",
       "owner": "assistant",
-      "status": "pending",
-      "notes": "",
-      "files": ["lib/subte/"]
+      "status": "done",
+      "notes": "15 archivos copiados verbatim, todos JS puro (import de JSON vía @/data/..., soportado por Metro + resolveJsonModule de expo/tsconfig.base). service-alert-helpers.ts necesitó también copiar types/subtes/subteServiceAlert.ts (no estaba en el plan original, es la única dependencia externa al barrel — pertenece conceptualmente a Sprint 3 pero no tiene costo portarlo ahora). tsc --noEmit y expo-doctor (18/18) limpios.",
+      "files": ["lib/subte/", "types/subtes/subteServiceAlert.ts"]
     },
     {
       "id": "S2-3",
       "sprint": 2,
       "title": "Portar useParadaDetalle.ts",
       "owner": "assistant",
-      "status": "pending",
-      "notes": "",
+      "status": "done",
+      "notes": "Copiado verbatim, compila limpio contra lib/subte ya portado. Falta consumirlo desde una pantalla (eso es Sprint 5, tarea del usuario).",
       "files": ["features/paradas/hooks/useParadaDetalle.ts"]
     },
     {
